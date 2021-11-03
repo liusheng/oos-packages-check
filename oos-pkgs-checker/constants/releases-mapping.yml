@@ -1,11 +1,11 @@
-20.03:
+"20.03":
   - OpenStack-release: Rocky
     branch: oepkg_openstack-rocky_oe-20.03-LTS-SP2
   - OpenStack-release: Queens
     branch: oepkg_openstack-queens_oe-20.03-LTS-SP2
-21.03:
+"21.03":
   - OpenStack-release: Victoria
     branch: openEuler-21.03
-21.09:
+"21.09":
   - OpenStack-release: Wallaby
     branch: openEuler-21.09
