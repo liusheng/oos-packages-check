@@ -1,0 +1,12 @@
+on: pull_request
+name: Tests / oos-packages-check
+jobs:
+  run:
+    name: Run
+    runs-on: ubuntu-latest
+    steps:
+    - name: Verify openEuler OpenStack packages's checker
+      uses: ./.
+      with:
+        openstack_release: Wallaby
+        openeuler_release: 21.09
