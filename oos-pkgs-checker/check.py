@@ -14,7 +14,7 @@ class Checker(object):
 
     def _get_pkg_branch(self):
         releases_mapping = yaml.load(
-            open('./constants/releases-mapping.yml'), Loader=yaml.FullLoader)
+            open('constants/releases-mapping.yml'), Loader=yaml.FullLoader)
         if self.openeuler_release not in releases_mapping:
             raise Exception("Specified openEuler %s not existed!" %
                             self.openeuler_release)
