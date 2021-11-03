@@ -5,8 +5,11 @@ jobs:
     name: Run
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout source code
+      uses: actions/checkout@v1
     - name: Verify openEuler OpenStack packages's checker
       uses: ./.
       with:
         openstack_release: Wallaby
         openeuler_release: 21.09
+        gitee_pat: ${{ secrets.GITEE_PAT }}
