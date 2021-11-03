@@ -1,0 +1,16 @@
+name: "openEuler OpenStack packages check"
+description: "Check the OpenStack packages broken or not in openEuler"
+author: "liusheng"
+inputs:
+  openstack_release:
+    description: "Specify OpenStack release, support: Rocky, Queens, Victoria, Wallaby"
+    required: true
+  openeuler_release:
+    description: "Specify openEuler release, support: 20.03, 21.03, 21.09"
+    required: true
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - ${{ inputs.openstack_release }}
+    - ${{ inputs.openeuler_release }}
