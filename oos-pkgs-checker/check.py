@@ -80,6 +80,7 @@ def check(openstack_release, openeuler_release, gitee_pat):
     table.field_names = ['Project', 'Old version', 'Upgraded version']
     for row in version_changed:
         table.add_row(row)
+    print("::set-output name=unmatched_projects::%s" % version_changed)
     print(table)
 
 
