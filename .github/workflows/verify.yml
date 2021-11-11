@@ -1,4 +1,7 @@
-on: pull_request
+on:
+  pull_request:
+  schedule:
+    - cron: '30 0 * * *'
 name: Tests / oos-packages-check
 jobs:
   run:
@@ -8,8 +11,29 @@ jobs:
     - name: Checkout source code
       uses: actions/checkout@v1
     - name: Verify openEuler OpenStack packages's checker
+      id: packages-verify
       uses: ./.
       with:
         openstack_release: Wallaby
         openeuler_release: 21.09
         gitee_pat: ${{ secrets.GITEE_PAT }}
+    - name: Add comment to gitee issue
+      run: |
+        curl -X POST --header 'Content-Type: application/json;charset=UTF-8'  \
+          'https://gitee.com/api/v5/repos/openeuler/openstack/issues/I4HUI4/comments' -d \
+          '{"access_token":"${{ secrets.GITEE_PAT }}","body":"Version changed projects OpenStack Wallaby + openEuler 21.09:\n```\n${{ steps.packages-verify.outputs.unmatched_projects_string }}\n```"}'
+    - name: Gen github page content
+      run: |
+       mkdir public
+       cat > public/index.html <<EOL
+        The following projects' version have been changed on OpenStach Wallaby with openEuler 21.09:
+        ${{ steps.packages-verify.outputs.unmatched_projects_html }}
+       EOL
+    - name: Deploy to GitHub Pages
+      if: success()
+      uses: crazy-max/ghaction-github-pages@v2
+      with:
+        target_branch: gh-pages
+        build_dir: public
+      env:
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
