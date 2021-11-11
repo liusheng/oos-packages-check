@@ -11,6 +11,11 @@ inputs:
   gitee_pat:
     description: "Gitee personal access token"
     required: true
+outputs:
+  unmatched_projects:
+    description: "List of projects unmatched version"
+  unmatched_projects_formatted:
+    description: "List of projects unmatched version(formatted output)"
 runs:
   using: "docker"
   image: "Dockerfile"
