@@ -3,6 +3,7 @@ import yaml
 
 import click
 import prettytable
+import urllib.parse
 
 
 class Checker(object):
@@ -80,6 +81,12 @@ def check(openstack_release, openeuler_release, gitee_pat):
     table.field_names = ['Project', 'Old version', 'Upgraded version']
     for row in version_changed:
         table.add_row(row)
+    print("::set-output name=unmatched_projects_row::%s" % version_changed)
+    print("::set-output name=unmatched_projects_html::%s" % table.get_html_string().replace('%', '%25').replace('\n', '%0A').replace('\r', '%0D'))
+    print("::set-output name=unmatched_projects_csv::%s" % table.get_csv_string().replace('%', '%25').replace('\n', '%0A').replace('\r', '%0D'))
+    print("::set-output name=unmatched_projects_json::%s" % table.get_json_string().replace('%', '%25').replace('\n', '%0A').replace('\r', '%0D'))
+    print("::set-output name=unmatched_projects_string::%s" % table.get_string().replace('%', '%25').replace('\n', '%0A').replace('\r', '%0D'))
+
     print(table)
 
 
