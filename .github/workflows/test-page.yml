@@ -1,0 +1,31 @@
+on: pull_request
+name: Tests / pages generation
+jobs:
+  run:
+    name: Run
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout source code
+      uses: actions/checkout@v1
+    - name: Gen dummy page
+      run: |
+       mkdir public
+       cat > public/index.html <<EOL
+       <!doctype html>
+       <html>
+         <head>
+           <title>GitHub Pages deployed!</title>
+         </head>
+         <body>
+           <p>GitHub Pages with <strong>${{ github.sha }}</strong> commit ID has been deployed through <a href="https://github.com/marketplace/actions/github-pages">GitHub Pages action</a> successfully.</p>
+         </body>
+       </html>
+       EOL
+    - name: Deploy to GitHub Pages
+      if: success()
+      uses: crazy-max/ghaction-github-pages@v2
+      with:
+        target_branch: gh-pages
+        build_dir: public
+      env:
+        GITHUB_TOKEN: ${{ secrets.TOKEN }}
